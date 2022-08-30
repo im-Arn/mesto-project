@@ -10,14 +10,14 @@
   background-position: center;
   background-color: rgba(0, 0, 0, 1);
   cursor: pointer;
-}
-  
-.profile__add-button:hover {
   transition: opacity .4s;
+}
+
+.profile__add-button:hover {
   opacity: 0.6;
 }
 
-@media screen and (max-width: 603px){
+@media screen and (max-width: 603px) {
   .profile__add-button {
     width: 100%;
     margin-top: 8px;
