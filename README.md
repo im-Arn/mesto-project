@@ -1,17 +1,20 @@
-# Проект: Место
+# Проект: Место (mesto) - проектная работа Яндекс.Практимум
 
-### Обзор
+**Описание**
 
+Одностраничник-платформа посвящённый интересным местам. Свёрстан pixelperfect по макету из Figma. Адаптирован под ряд устройств c шириной экрана: 320px, 1280px.
+
+## Используемые технологии:
+* HTML
+* CSS
+* Flexbox
+* Grid Layout
+* Метатеги
+* Adaptive Layout, Responsive
 * Figma
-* Картинки
+* BEM
+* Form, popup
 
-**Figma**
-
-* [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
-
-**Картинки**
-
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
-
-Удачи!
+**Доп. материалы:**
+* Макет: https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1
+* Проект: https://im-arn.github.io/mesto-project/index.html

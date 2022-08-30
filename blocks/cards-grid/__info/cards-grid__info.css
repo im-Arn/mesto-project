@@ -1,0 +1,7 @@
+.cards-grid__info { 
+  padding: 22px 20px 25px 21px;
+  display: grid;
+  grid-template-columns: 1fr 22px;
+  gap: 22px;
+  align-items: center;
+}

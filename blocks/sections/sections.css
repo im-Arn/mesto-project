@@ -1,0 +1,4 @@
+.sections {
+  max-width: 880px;
+  min-height: calc(100vh - 300px);
+}

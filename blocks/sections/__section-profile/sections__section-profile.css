@@ -1,0 +1,9 @@
+.sections__section-profile {
+  margin-bottom: 50px;
+}
+
+@media screen and (max-width: 330px){
+  .sections__section-profile {
+    margin-bottom: 34px;
+  }
+}
