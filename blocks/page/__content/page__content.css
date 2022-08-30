@@ -2,7 +2,7 @@
   margin: 0px auto;
 }
 
-@media screen and (max-width: 918px){
+@media screen and (max-width: 918px) {
   .page__content {
     margin: 0px 19px;
   }
