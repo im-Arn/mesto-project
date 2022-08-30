@@ -1,6 +1,7 @@
 .popup__item {
-  width: 100%;
+  min-width: 83.25%;
   height: 27px;
+  margin-bottom: 30px;
   box-sizing: border-box;
   border: 0px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -8,14 +9,23 @@
   font-size: 14px;
   line-height: 17px;
   padding: 0px 0px 9px;
-  font-family: inherit; 
+  font-family: inherit;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   outline-style: none;
 }
 
+.popup__item:last-of-type {
+  margin-bottom: 0px;
+}
+
 .popup__item:focus {
-  /*бриф: любой интерактив элемент должен иметь состояние наведения или фокуса*/
   background-color: rgba(0, 0, 0, 0.02);
+}
+
+@media screen and (max-width: 320px) {
+  .popup__item {
+    min-width: 84.4%;
+  }
 }
