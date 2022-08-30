@@ -1,17 +1,10 @@
-.popup__container { 
+.popup__container {
   position: relative;
-  height: 330px;
   width: 430px;
-  display: grid;
-  justify-items: center;
-  grid-template-rows: 1fr auto 1fr; /*вы посмотрите какая прелесть*/
-  border-radius: 10px;
-  background-color: #FFFFFF;
 }
 
 @media screen and (max-width: 320px) {
   .popup__container {
-    height: 322px;
     width: 282px;
   }
 }
