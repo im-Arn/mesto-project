@@ -1,0 +1,15 @@
+.popup__form {
+  width: 100%;
+  padding: 34px 0px 37px;
+  display: grid;
+  justify-items: center;
+  grid-template-rows: auto auto auto;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+}
+
+@media screen and (max-width: 320px) {
+  .popup__form {
+    padding: 25px 0px 25px;
+  }
+}
