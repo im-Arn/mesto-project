@@ -1,4 +1,5 @@
 .profile__bio {
+  max-width: 336px;
   grid-area: bio;
   margin: 0px;
   padding: 0px;
@@ -8,6 +9,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  transition: max-width 2s ease;
 }
 
 @media screen and (max-width: 603px) {
@@ -20,6 +22,7 @@
 
 @media screen and (max-width: 400px) {
   .profile__bio {
+    max-width: 190px;
     font-size: 14px;
     line-height: 17px;
   }

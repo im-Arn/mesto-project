@@ -1,21 +1,29 @@
 .profile__info {
   max-width: 336px;
   display: grid;
-  grid-template-columns: max-content 24px;
+  grid-template-columns: minmax(190px, 294px) 24px;
   column-gap: 18px;
   row-gap: 7px;
   align-items: end;
   grid-template-areas:
     "name button"
     "bio bio";
+  transition: max-width, gap 2s ease;
 }
 
 @media screen and (max-width: 603px) {
   .profile__info {
+    max-width: 60%;
     padding-left: 42px;
     grid-template-areas:
       "name button"
       "bio .";
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .profile__info {
+    max-width: 70%;
   }
 }
 
