@@ -119,11 +119,11 @@ formElementCard.addEventListener('submit', formSubmitHandlerCard);
 const BaseCards = [
   {
     title: 'Карачаевск',
-    image: '../images/kirill-pershin-1088404-unsplash.jpg',
+    image: './images/kirill-pershin-1088404-unsplash.jpg',
   },
   {
     title: 'Горный Алтай',
-    image: '../images/evgenia-beletskaya-altai-unsplash.jpg',
+    image: './images/evgenia-beletskaya-altai-unsplash.jpg',
   },
   {
     title: 'Домбай',
@@ -131,15 +131,15 @@ const BaseCards = [
   },
   {
     title: 'Якутия',
-    image: '../images/mir.jpg',
+    image: './images/mir.jpg',
   },
   {
     title: 'Озеро Иллиналта',
-    image: '../images/illialta.jpg',
+    image: './images/illialta.jpg',
   },
   {
     title: 'Курилы',
-    image: '../images/kurili.jpg',
+    image: './images/kurili.jpg',
   },
 ];
 
