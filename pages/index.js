@@ -12,49 +12,45 @@ const cardsTitleInput = document.querySelector('.popup__item_el_title');
 
 const popupCloseButtons = document.querySelectorAll('.popup__button-close');
 
+const cardsList = document.querySelector('.cards-grid__list');
 //функции закрытия открытия поп-апов --------------------------------------------------------------------------------
-function popupClose(popupElement) {
+function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
-};
+}
 
-function popupOpen(popupElement) {
+function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
-};
+}
 
 //обработчики события открытия поп-апов -----------------------------------------------------------------------------
-function clearInput(firstItemInput, secondItemInput) {
-  firstItemInput.value = '';
-  secondItemInput.value = '';
-};
-
 profileButton.addEventListener('click', function () {
-  popupOpen(popupProfile);
+  openPopup(popupProfile);
   profileNameInput.value = profileName.textContent;
   profileBioInput.value = profileBio.textContent;
 });
 
 сardsAddButton.addEventListener('click', function () {
-  popupOpen(popupCards);
-  clearInput(cardsImgInput, cardsTitleInput);
+  openPopup(popupCards);
 });
 
 //обработчик события закрытия поп-апа -------------------------------------------------------------------------------
 popupCloseButtons.forEach(function (elem) {
+  const popupItem = elem.closest('.popup');
   elem.addEventListener('click', function () {
-    const popupItem = elem.closest('.popup');
-    popupClose(popupItem);
+    closePopup(popupItem);
   });
 });
 
 //темплэйт для карточек -------------------------------------------------------------------------------------------
-function addCard(cardImageValue, cardTitleValue) {
+function createCard(cardImageValue, cardTitleValue) {
   const cardTemplate = document.querySelector('.template-cards').content;
-  const cardsList = document.querySelector('.cards-grid__list');
   const cardElement = cardTemplate.querySelector('.cards-grid__item').cloneNode(true);
+  const cardImage = cardElement.querySelector('.cards-grid__photo');
+  const cardTitle = cardElement.querySelector('.cards-grid__title');
 
-  cardElement.querySelector('.cards-grid__photo').src = cardImageValue;
-  cardElement.querySelector('.cards-grid__photo').alt = 'фото ' + cardTitleValue;
-  cardElement.querySelector('.cards-grid__title').textContent = cardTitleValue;
+  cardImage.src = cardImageValue;
+  cardImage.alt = 'фото ' + cardTitleValue;
+  cardTitle.textContent = cardTitleValue;
 
   //обработчик события лайк ---------------------------------------------------------------------------------------
   const likeButton = cardElement.querySelector('.cards-grid__heart-button');
@@ -70,49 +66,53 @@ function addCard(cardImageValue, cardTitleValue) {
     listItem.remove();
   });
   //обработчик события нажатия на изображение ---------------------------------------------------------------------
-  const image = cardElement.querySelector('.cards-grid__photo');
   const popupImage = document.querySelector('.popup_image');
   const popupImageValue = document.querySelector('.popup__photo');
   const popupTitleValue = document.querySelector('.popup__subtitle');
 
-  image.addEventListener('click', function () {
-    popupOpen(popupImage);
-    popupImageValue.src = cardElement.querySelector('.cards-grid__photo').src;
-    popupImageValue.alt = cardElement.querySelector('.cards-grid__photo').alt;
-    popupTitleValue.textContent = cardElement.querySelector('.cards-grid__title').textContent;
+  cardImage.addEventListener('click', function () {
+    openPopup(popupImage);
+    popupImageValue.src = cardImageValue;
+    popupImageValue.alt = cardImage.alt;
+    popupTitleValue.textContent = cardTitleValue;
   });
 
-  cardsList.prepend(cardElement);//добавляем новый элемент в начало родителя
+  return cardElement;
 }
 
-//функция получения данных карточек из инпута ---------------------------------------------------------------------
+function addCard(cardImageValue, cardTitleValue) {
+  const cardNew = createCard(cardImageValue, cardTitleValue);
+  cardsList.prepend(cardNew);
+}
 
-function getCardData() {
-  addCard(cardsImgInput.value, cardsTitleInput.value);
+//функция объединяющая создание карточек ----------------------------------------------------------------------------
+
+function getCardData(cardImageValue, cardTitleValue) {
+  createCard(cardImageValue, cardTitleValue);
+  addCard(cardImageValue, cardTitleValue);
 }
 
 //событие отправки формы --------------------------------------------------------------------------------------------
-const formElementProf = document.querySelector('.popup__form-profile');
-const formElementCard = document.querySelector('.popup__form-cards');
+const formElementProf = document.forms["popup-edit-profile"];
+const formElementCard = document.forms["popup-add-cars"];
 
-function formSubmitHandlerProf(evt) {
+function submitFormHandlerProf(evt) {
   evt.preventDefault();
   profileName.textContent = profileNameInput.value;
   profileBio.textContent = profileBioInput.value;
-  clearInput(profileNameInput, profileBioInput);
-  popupClose(popupProfile);
-};
+  closePopup(popupProfile);
+}
 
-formElementProf.addEventListener('submit', formSubmitHandlerProf);
+formElementProf.addEventListener('submit', submitFormHandlerProf);
 
-function formSubmitHandlerCard(evt) {
+function submitFormHandlerCard(evt) {
   evt.preventDefault();
-  getCardData()
-  clearInput(cardsImgInput, cardsTitleInput);
-  popupClose(popupCards);
-};
+  getCardData(cardsImgInput.value, cardsTitleInput.value);
+  formElementCard.reset();
+  closePopup(popupCards);
+}
 
-formElementCard.addEventListener('submit', formSubmitHandlerCard);
+formElementCard.addEventListener('submit', submitFormHandlerCard);
 
 
 //массив карточек -------------------------------------------------------------------------------------------------
@@ -144,7 +144,7 @@ const BaseCards = [
 ];
 
 BaseCards.forEach(function (item) {
-  const cardImage = item.image;
-  const cardTitle = item.title;
-  addCard(cardImage, cardTitle);
+  const cardImageArrEl = item.image;
+  const cardTitleArrEl = item.title;
+  getCardData(cardImageArrEl, cardTitleArrEl);
 });
