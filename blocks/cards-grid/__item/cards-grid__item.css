@@ -1,4 +1,7 @@
 .cards-grid__item {
+  display: flex;
+  position: relative;
+  flex-direction: column;
   background: #FFF;
   border-radius: 10px;
   box-sizing: border-box;

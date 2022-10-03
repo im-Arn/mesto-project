@@ -1,0 +1,9 @@
+.popup__subtitle {
+  padding: 10px 0px 0px 0px;
+  margin: 0px;
+  max-width: 75vw;
+  overflow-wrap: break-word;
+  font-size: 12px;
+  line-height: 15px;
+  color: rgba(255, 255, 255, 1);
+}
