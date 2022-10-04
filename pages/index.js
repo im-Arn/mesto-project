@@ -13,6 +13,10 @@ const cardsTitleInput = document.querySelector('.popup__item_el_title');
 const popupCloseButtons = document.querySelectorAll('.popup__button-close');
 
 const cardsList = document.querySelector('.cards-grid__list');
+
+const popupImage = document.querySelector('.popup_image');
+const popupImageValue = document.querySelector('.popup__photo');
+const popupTitleValue = document.querySelector('.popup__subtitle');
 //функции закрытия открытия поп-апов --------------------------------------------------------------------------------
 function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
@@ -66,10 +70,6 @@ function createCard(cardImageValue, cardTitleValue) {
     listItem.remove();
   });
   //обработчик события нажатия на изображение ---------------------------------------------------------------------
-  const popupImage = document.querySelector('.popup_image');
-  const popupImageValue = document.querySelector('.popup__photo');
-  const popupTitleValue = document.querySelector('.popup__subtitle');
-
   cardImage.addEventListener('click', function () {
     openPopup(popupImage);
     popupImageValue.src = cardImageValue;
@@ -83,13 +83,6 @@ function createCard(cardImageValue, cardTitleValue) {
 function addCard(cardImageValue, cardTitleValue) {
   const cardNew = createCard(cardImageValue, cardTitleValue);
   cardsList.prepend(cardNew);
-}
-
-//функция объединяющая создание карточек ----------------------------------------------------------------------------
-
-function getCardData(cardImageValue, cardTitleValue) {
-  createCard(cardImageValue, cardTitleValue);
-  addCard(cardImageValue, cardTitleValue);
 }
 
 //событие отправки формы --------------------------------------------------------------------------------------------
@@ -107,7 +100,7 @@ formElementProf.addEventListener('submit', submitFormHandlerProf);
 
 function submitFormHandlerCard(evt) {
   evt.preventDefault();
-  getCardData(cardsImgInput.value, cardsTitleInput.value);
+  addCard(cardsImgInput.value, cardsTitleInput.value);
   formElementCard.reset();
   closePopup(popupCards);
 }
@@ -146,5 +139,5 @@ const BaseCards = [
 BaseCards.forEach(function (item) {
   const cardImageArrEl = item.image;
   const cardTitleArrEl = item.title;
-  getCardData(cardImageArrEl, cardTitleArrEl);
+  addCard(cardImageArrEl, cardTitleArrEl);
 });
