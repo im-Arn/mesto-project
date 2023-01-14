@@ -1,0 +1,23 @@
+.cards-grid__list {
+  display: grid;
+  box-sizing: border-box;
+  grid-template-columns: repeat(auto-fit, 282px);
+  column-gap: 17px;
+  grid-template-rows: repeat(auto-fit, minmax(361px, 1fr));
+  row-gap: 20px;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+@media screen and (max-width: 918px) {
+  .cards-grid__list {
+    grid-template-columns: repeat(auto-fit, minmax(282px, calc(50% - 9px)));
+  }
+}
+
+@media screen and (max-width: 619px) {
+  .cards-grid__list {
+    grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  }
+}

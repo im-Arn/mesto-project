@@ -1,0 +1,7 @@
+.popup__form {
+  width: 100%;
+  display: grid;
+  /* justify-items: center; */
+  justify-items: stretch;
+  grid-template-rows: auto auto auto;
+}
