@@ -7,23 +7,30 @@ import {
 import {
   formElementProf,
   formElementCard,
-  сardsAddButton,
   openPopup,
   closePopup,
-  profileButton,
-  popupProfile,
-  profileName,
-  profileBio,
-  profileNameInput,
-  profileBioInput,
-  popupCards,
-  cardsImgInput,
-  cardsTitleInput,
 } from './modal.js';
 
 import {
   addCard,
  } from './card.js';
+
+const profileButton = document.querySelector('.profile__edit-button'); //кнопка редактирования профиля
+const popupProfile = document.querySelector('.popup_profile'); //попап профиля
+const profileName = document.querySelector('.profile__name'); //имя профиля
+const profileBio = document.querySelector('.profile__bio'); //био профиля
+const profileNameInput = document.querySelector('.popup__item_el_name'); //поле имени профиля
+const profileBioInput = document.querySelector('.popup__item_el_bio'); //поле био профиля
+
+const сardsAddButton = document.querySelector('.profile__add-button'); //кнопка создания карточки
+const popupCards = document.querySelector('.popup_cards'); //попап создания карточки
+const cardsImgInput = document.querySelector('.popup__item_el_img'); //поле имени карточки
+const cardsTitleInput = document.querySelector('.popup__item_el_title'); //поле url карточки
+
+const resetButtonState = (buttonElement) => {
+  buttonElement.disabled = true;
+  buttonElement.classList.add('popup__button-submit_inactive');
+};
 
 // Обработчики событий открытия поп-апов -----------------------------------------------------------------------------
 profileButton.addEventListener('click', function () {
@@ -49,6 +56,8 @@ formElementCard.addEventListener('submit', (evt) => {
   addCard(cardsImgInput.value, cardsTitleInput.value);
   formElementCard.reset();
   closePopup(popupCards);
+  const curentSubmitBtn = document.querySelector('.popup__button-submit-cards');
+  resetButtonState(curentSubmitBtn);
 });
 
 enableValidation({

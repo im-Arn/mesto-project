@@ -3,13 +3,17 @@ import {
 } from './modal.js';
 
 const cardsList = document.querySelector('.cards-grid__list'); //список карточек
-const popupImageValue = document.querySelector('.popup__photo'); //темплейт карточки
-const popupTitleValue = document.querySelector('.popup__subtitle'); //темплейт карточки
+const cardTemplate = document.querySelector('.template-cards').content; //темплейт карточки
+const popupImageValue = document.querySelector('.popup__photo'); //темплейт карточки изображение
+const popupTitleValue = document.querySelector('.popup__subtitle'); //темплейт карточки заголовок
 const popupImage = document.querySelector('.popup_image'); //попап изображения
+// const cardData = {
+//   title: cardTitleValue,
+//   image: cardImageValue
+// };
 
 //темплэйт для карточек ---------------------------------------------------------------------------------------------
 function createCard(cardImageValue, cardTitleValue) {
-  const cardTemplate = document.querySelector('.template-cards').content;
   const cardElement = cardTemplate.querySelector('.cards-grid__item').cloneNode(true);
   const cardImage = cardElement.querySelector('.cards-grid__photo');
   const cardTitle = cardElement.querySelector('.cards-grid__title');
@@ -48,10 +52,15 @@ function addCard(cardImageValue, cardTitleValue) {
   cardsList.prepend(cardNew);
 }
 
+// function addCard(cardData) {
+//   const cardNew = createCard(cardData.image, cardData.title);
+//   cardsList.prepend(cardNew);
+// }
+
 // Массив карточек----------------------------------------------------------------------------------------------------
 import karachaevskImg from '../images/kirill-pershin-1088404-unsplash.jpg';
 import altaiImg from '../images/evgenia-beletskaya-altai-unsplash.jpg';
-import dombaiImg from '../images/kirill-pershin-1556355-unsplash.jpg';
+import dombaiImg from '../images/1582615036119643712.jpg';
 import yacutiaImg from '../images/mir.jpg';
 import illinaltaImg from '../images/illialta.jpg';
 import kuriliImg from '../images/kurili.jpg';
