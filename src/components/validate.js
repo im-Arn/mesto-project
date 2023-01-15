@@ -48,7 +48,7 @@ const toggleButtonState = (inputsArray, buttonElement, settings) => {
 // Комплексная функция работающая со всеми формами: валидность полей, слушатели, состояние сабмитов
 const setEventListeners = (formElement, settings) => {
   const inputsArray = Array.from(formElement.querySelectorAll(settings.inputSelector));
-  const buttonElement = formElement.querySelector('.popup__button-submit');
+  const buttonElement = formElement.querySelector(settings.submitButtonSelector);
   toggleButtonState(inputsArray, buttonElement, settings);
   inputsArray.forEach((formInput) => {
     formInput.addEventListener('input', () => {
