@@ -13,7 +13,6 @@ const server = {
 const getResponse(res) => {
   if(res.ok) {
     return res.json();
-  } else {
-
   }
-}
+  return Promise.reject(`Что-то пошло не так: ${res.status}`);
+};
