@@ -52,51 +52,46 @@ function addCard(cardImageValue, cardTitleValue) {
   cardsList.prepend(cardNew);
 }
 
-// function addCard(cardData) {
-//   const cardNew = createCard(cardData.image, cardData.title);
-//   cardsList.prepend(cardNew);
-// }
-
 // Массив карточек----------------------------------------------------------------------------------------------------
-import karachaevskImg from '../images/kirill-pershin-1088404-unsplash.jpg';
-import altaiImg from '../images/evgenia-beletskaya-altai-unsplash.jpg';
-import dombaiImg from '../images/1582615036119643712.jpg';
-import yacutiaImg from '../images/mir.jpg';
-import illinaltaImg from '../images/illialta.jpg';
-import kuriliImg from '../images/kurili.jpg';
+// import karachaevskImg from '../images/kirill-pershin-1088404-unsplash.jpg';
+// import altaiImg from '../images/evgenia-beletskaya-altai-unsplash.jpg';
+// import dombaiImg from '../images/1582615036119643712.jpg';
+// import yacutiaImg from '../images/mir.jpg';
+// import illinaltaImg from '../images/illialta.jpg';
+// import kuriliImg from '../images/kurili.jpg';
 
-const baseCards = [
-  {
-    title: 'Карачаевск',
-    image: karachaevskImg,
-  },
-  {
-    title: 'Горный Алтай',
-    image: altaiImg,
-  },
-  {
-    title: 'Домбай',
-    image: dombaiImg,
-  },
-  {
-    title: 'Якутия',
-    image: yacutiaImg,
-  },
-  {
-    title: 'Озеро Иллиналта',
-    image: illinaltaImg,
-  },
-  {
-    title: 'Курилы',
-    image: kuriliImg,
-  },
-];
+// const baseCards = [
+//   {
+//     title: 'Карачаевск',
+//     image: karachaevskImg,
+//   },
+//   {
+//     title: 'Горный Алтай',
+//     image: altaiImg,
+//   },
+//   {
+//     title: 'Домбай',
+//     image: dombaiImg,
+//   },
+//   {
+//     title: 'Якутия',
+//     image: yacutiaImg,
+//   },
+//   {
+//     title: 'Озеро Иллиналта',
+//     image: illinaltaImg,
+//   },
+//   {
+//     title: 'Курилы',
+//     image: kuriliImg,
+//   },
+// ];
 
-baseCards.forEach(function (item) {
-  const cardImageArrEl = item.image;
-  const cardTitleArrEl = item.title;
-  addCard(cardImageArrEl, cardTitleArrEl);
-});
+// baseCards.forEach(function (item) {
+//   const cardImageArrEl = item.image;
+//   const cardTitleArrEl = item.title;
+//   addCard(cardImageArrEl, cardTitleArrEl);
+// });
 
 export {
   addCard,
