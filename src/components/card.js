@@ -65,7 +65,7 @@ import yacutiaImg from '../images/mir.jpg';
 import illinaltaImg from '../images/illialta.jpg';
 import kuriliImg from '../images/kurili.jpg';
 
-const BaseCards = [
+const baseCards = [
   {
     title: 'Карачаевск',
     image: karachaevskImg,
@@ -92,7 +92,7 @@ const BaseCards = [
   },
 ];
 
-BaseCards.forEach(function (item) {
+baseCards.forEach(function (item) {
   const cardImageArrEl = item.image;
   const cardTitleArrEl = item.title;
   addCard(cardImageArrEl, cardTitleArrEl);
