@@ -56,8 +56,7 @@ formElementCard.addEventListener('submit', (evt) => {
   addCard(cardsImgInput.value, cardsTitleInput.value);
   formElementCard.reset();
   closePopup(popupCards);
-  const curentSubmitBtn = document.querySelector('.popup__button-submit-cards');
-  resetButtonState(curentSubmitBtn);
+  resetButtonState(evt.submitter);
 });
 
 enableValidation({
