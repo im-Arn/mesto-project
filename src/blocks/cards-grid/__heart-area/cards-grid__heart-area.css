@@ -1,0 +1,5 @@
+.cards-grid__heart-area {
+ display: flex;
+ flex-direction: column;
+ gap: 3px;
+}

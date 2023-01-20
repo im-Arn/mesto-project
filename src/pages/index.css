@@ -31,6 +31,10 @@
 @import url(../blocks/header/__logo/header__logo.css);
 
 @import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__avatar-area/profile__avatar-area.css);
+@import url(../blocks/profile/__avatar-area-overlay/profile__avatar-area-overlay.css);
+@import url(../blocks/profile/__avatar-area-overlay/_activ/profile__avatar-area-overlay_activ.css);
+@import url(../blocks/profile/__avatar-button/profile__avatar-button.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__edit-button/profile__edit-button.css);
@@ -43,7 +47,9 @@
 @import url(../blocks/cards-grid/__photo/cards-grid__photo.css);
 @import url(../blocks/cards-grid/__info/cards-grid__info.css);
 @import url(../blocks/cards-grid/__title/cards-grid__title.css);
+@import url(../blocks/cards-grid/__heart-area/cards-grid__heart-area.css);
 @import url(../blocks/cards-grid/__heart-button/cards-grid__heart-button.css);
+@import url(../blocks/cards-grid/__heart-counter/cards-grid__heart-counter.css);
 @import url(../blocks/cards-grid/__heart-button/_active/cards-grid__heart-button_active.css);
 @import url(../blocks/cards-grid/__trash-button/cards-grid__trash-button.css);
 
