@@ -10,6 +10,7 @@
 
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_profile/popup_profile.css);
+@import url(../blocks/popup/_avatar/popup_avatar.css);
 @import url(../blocks/popup/_cards/popup_cards.css);
 @import url(../blocks/popup/_image/popup_image.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
