@@ -74,6 +74,7 @@ const changeAvatar = (avatar) => {
       avatar: avatar
     })
   })
+    .then((res) => getResponse(res))
 };
 
 // Взаимодействие с лайками -----------------------------------------------
