@@ -53,6 +53,7 @@
 @import url(../blocks/cards-grid/__heart-counter/cards-grid__heart-counter.css);
 @import url(../blocks/cards-grid/__heart-button/_active/cards-grid__heart-button_active.css);
 @import url(../blocks/cards-grid/__trash-button/cards-grid__trash-button.css);
+@import url(../blocks/cards-grid/__trash-button/_active/cards-grid__trash-button_active.css);
 
 @import url(../blocks/sections/sections.css);
 @import url(../blocks/sections/__section-profile/sections__section-profile.css);
