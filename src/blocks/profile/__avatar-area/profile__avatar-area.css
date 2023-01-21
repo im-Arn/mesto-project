@@ -1,0 +1,10 @@
+.profile__avatar-area {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
