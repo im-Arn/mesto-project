@@ -25,3 +25,6 @@ export const formCards = document.querySelector('.popup__form-cards');
 
 export const popupImage = document.querySelector('.popup_image');
 export const popupProfile = document.querySelector('.popup_profile');
+export const popupAvatar = document.querySelector('.popup_avatar'); //попап смены аватара
+export const profileButtonSubmitter = document.querySelector('.popup__button-submit'); //кнопка сабмит профиля
+export const popupCards = document.querySelector('.popup_cards'); //попап создания карточки

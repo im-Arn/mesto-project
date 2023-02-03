@@ -25,6 +25,9 @@ import {
   formCards,
   popupImage,
   popupProfile,
+  popupAvatar,
+  profileButtonSubmitter,
+  popupCards,
 } from './constants.js';
 
 export const api = new Api(server);
@@ -43,7 +46,7 @@ const profilePopup = new PopupWithForm(
   callback: (formData) => {
     renderLoading(true, profileButtonSubmitter);
     api.changeProfile(formData)
-  .then(profile => {
+    .then(profile => {
     profileName.textContent = profile.name;
     profileBio.textContent = profile.about;
     profilePopup.close();
@@ -59,15 +62,58 @@ const profilePopup = new PopupWithForm(
 
 profilePopup.setEventListeners();
 
+const avatarPopup = new PopupWithForm({
+  popup: popupAvatar,
+  callback: (formData) => {
+    renderLoading(true, profileButtonSubmitter);
+    api.changeAvatar(formData)
+    .then((data) =>{
+      avatar.src = data.avatar;
+      avatarPopup.close();
+      resetButtonState(profileButtonSubmitter);
+    })
+    .catch((err) => {
+      console.log(`Ошибка обновления аватара ${err}`);
+    })
+    .finally(() => {
+      renderLoading(false, profileButtonSubmitter);
+    })
+  }
+})
+
+avatarPopup.setEventListeners();
+
+const cardsPopup = new PopupWithForm({
+  popup: popupCards,
+  callback: (formData) => {
+    renderLoading(true, profileButtonSubmitter);
+    api.postNewCard(formData)
+    .then((card) => {
+      addNewCard(card, card.owner);
+      cardsPopup.close()
+      resetButtonState(profileButtonSubmitter);
+    })
+    .catch((err) => {
+      console.log(`Ошибка создания карточки ${err}`);
+    })
+    .finally(() => {
+      renderLoading(false, profileButtonSubmitter);
+    })
+  }
+})
+
+cardsPopup.setEventListeners();
+
+
 const avatar = document.querySelector('.profile__avatar'); //изображение аватара
-const popupAvatar = document.querySelector('.popup_avatar'); //попап смены аватара
+
 const formElementAvatar = document.forms["popup-edit-avatar"]; //форма попапа аватара
 const avatarImgInput = document.querySelector('.popup__item_el_avatar'); //поле ссылки попапа смены аватара
 const avatarArea = document.querySelector('.profile__avatar-area'); //контейнер аватара и кнопки попапа
 const avatarButton = document.querySelector('.profile__avatar-button'); //кнопка редактирования аватара
 const avatarOverlay = document.querySelector('.profile__avatar-area-overlay'); //оверлей аватара при наведении на зону аватара
 
-const profileButtonSubmitter = document.querySelector('.popup__button-submit'); //кнопка сабмит профиля
+
 const profileButton = document.querySelector('.profile__edit-button'); //кнопка редактирования профиля
 const profileName = document.querySelector('.profile__name'); //имя профиля
 const profileBio = document.querySelector('.profile__bio'); //био профиля
@@ -75,7 +121,7 @@ const profileNameInput = document.querySelector('.popup__item_el_name'); //по�
 const profileBioInput = document.querySelector('.popup__item_el_bio'); //поле био профиля
 
 const сardsAddButton = document.querySelector('.profile__add-button'); //кнопка создания карточки
-const popupCards = document.querySelector('.popup_cards'); //попап создания карточки
+
 const cardsImgInput = document.querySelector('.popup__item_el_img'); //поле имени карточки
 const cardsTitleInput = document.querySelector('.popup__item_el_title'); //поле url карточки
 
@@ -153,41 +199,41 @@ avatarArea.addEventListener('mouseout', () => {
 //   })
 // });
 
-formElementCard.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  renderLoading(true, evt.submitter);
-  api.postNewCard(cardsTitleInput.value, cardsImgInput.value)
-    .then((card) => {
-      formElementCard.reset();
-      addNewCard(card, card.owner);
-      closePopup(popupCards);
-      resetButtonState(evt.submitter);
-    })
-    .catch((err) => {
-      console.log(`Ошибка создания карточки ${err}`);
-    })
-    .finally(() => {
-      renderLoading(false, evt.submitter);
-    })
-});
+// formElementCard.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
+//   renderLoading(true, evt.submitter);
+//   api.postNewCard(cardsTitleInput.value, cardsImgInput.value)
+//     .then((card) => {
+//       formElementCard.reset();
+//       addNewCard(card, card.owner);
+//       closePopup(popupCards);
+//       resetButtonState(evt.submitter);
+//     })
+//     .catch((err) => {
+//       console.log(`Ошибка создания карточки ${err}`);
+//     })
+//     .finally(() => {
+//       renderLoading(false, evt.submitter);
+//     })
+// });
 
-formElementAvatar.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  renderLoading(true, evt.submitter);
-  api.changeAvatar(avatarImgInput.value)
-    .then(() =>{
-      avatar.src = avatarImgInput.value;
-      formElementAvatar.reset();
-      closePopup(popupAvatar);
-      resetButtonState(evt.submitter);
-    })
-    .catch((err) => {
-      console.log(`Ошибка обновления аватара ${err}`);
-    })
-    .finally(() => {
-      renderLoading(false, evt.submitter);
-    })
-});
+// formElementAvatar.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
+//   renderLoading(true, evt.submitter);
+//   api.changeAvatar(avatarImgInput.value)
+//     .then(() =>{
+//       avatar.src = avatarImgInput.value;
+//       formElementAvatar.reset();
+//       closePopup(popupAvatar);
+//       resetButtonState(evt.submitter);
+//     })
+//     .catch((err) => {
+//       console.log(`Ошибка обновления аватара ${err}`);
+//     })
+//     .finally(() => {
+//       renderLoading(false, evt.submitter);
+//     })
+// });
 
 // enableValidation({
 //   formSelector: '.popup__form',

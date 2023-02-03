@@ -26,13 +26,13 @@ class Api {
   /**
    * Публичный метод получения карточек
    */
-  postNewCard(name, link) {
+  postNewCard(data) {
     return fetch(`${this._server.baseUrl}cards`, {
       method: this._server.post,
       headers: this._server.headers,
       body: JSON.stringify({
-        name: name,
-        link: link
+        name: data[Object.keys(data)[0]],
+        about: data[Object.keys(data)[1]]
       })
     })
       .then((res) => this._getResponse(res))
@@ -67,12 +67,12 @@ class Api {
   };
 
   // Взаимодействие с аватаром ----------------------------------------------
-  changeAvatar(avatar) {
+  changeAvatar(data) {
     return fetch(`${this._server.baseUrl}users/me/avatar`, {
       method: this._server.patch,
       headers: this._server.headers,
       body: JSON.stringify({
-        avatar: avatar
+        avatar: data[Object.keys(data)[0]]
       })
     })
       .then((res) => this._getResponse(res))
