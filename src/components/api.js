@@ -32,7 +32,7 @@ class Api {
       headers: this._server.headers,
       body: JSON.stringify({
         name: data[Object.keys(data)[0]],
-        about: data[Object.keys(data)[1]]
+        link: data[Object.keys(data)[1]]
       })
     })
       .then((res) => this._getResponse(res))
