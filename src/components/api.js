@@ -1,107 +1,101 @@
-const server = {
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-18/',
-  headers: {
-    authorization: '5eae8a5e-c994-4c27-8d42-aedac4e6ee20',
-    'Content-Type': 'application/json'
-  },
-  post: 'POST', //для отправки данных на сервер
-  patch: 'PATCH', //для профиля пользователя
-  put: 'PUT', //предназначен для полного обновления указанного ресурса
-  delete: 'DELETE'//для удаления ресурса с сервера
-};
 
-const getResponse = (res) => {
-  if (res.ok) {
-    return res.json();
+
+class Api {
+  constructor(server) {
+    this._server = server;
   }
-  return Promise.reject(`Что-то пошло не так: ${res.status}`);
-};
 
-// Взаимодействие с карточками -----------------------------------------------
-const getServerCards = () => {
-  return fetch(`${server.baseUrl}cards`, {
-    headers: server.headers
-  })
-    .then((res) => getResponse(res))
-};
 
-const postNewCard = (name, link) => {
-  return fetch(`${server.baseUrl}cards`, {
-    method: server.post,
-    headers: server.headers,
-    body: JSON.stringify({
-      name: name,
-      link: link
+  _getResponse(res) {
+    return res.ok
+      ? res.json()
+      : Promise.reject(`Что-то пошло не так: ${res.status}`);
+  };
+
+  // Взаимодействие с карточками -----------------------------------------------
+  /**
+   * Публичный метод взаимодействия с карточками
+   */
+  getServerCards() {
+    return fetch(`${this._server.baseUrl}cards`, {
+      headers: this._server.headers
     })
-  })
-    .then((res) => getResponse(res))
-};
+      .then((res) => this._getResponse(res))
+  };
 
-const deleteOwnCard = (cardID) => {
-  return fetch(`${server.baseUrl}cards/${cardID}`, {
-    method: server.delete,
-    headers: server.headers
-  })
-    .then((res) => getResponse(res))
-};
-
-// Взаимодействие с профилем -----------------------------------------------
-const getServerProfile = () => {
-  return fetch(`${server.baseUrl}users/me`, {
-    headers: server.headers
-  })
-    .then((res) => getResponse(res))
-};
-
-const changeProfile = (name, about) => {
-  return fetch(`${server.baseUrl}users/me`, {
-    method: server.patch,
-    headers: server.headers,
-    body: JSON.stringify({
-      name: name,
-      about: about
+  /**
+   * Публичный метод получения карточек
+   */
+  postNewCard(name, link) {
+    return fetch(`${this._server.baseUrl}cards`, {
+      method: this._server.post,
+      headers: this._server.headers,
+      body: JSON.stringify({
+        name: name,
+        link: link
+      })
     })
-  })
-    .then((res) => getResponse(res))
-};
+      .then((res) => this._getResponse(res))
+  };
 
-// Взаимодействие с аватаром ----------------------------------------------
-const changeAvatar = (avatar) => {
-  return fetch(`${server.baseUrl}users/me/avatar`, {
-    method: server.patch,
-    headers: server.headers,
-    body: JSON.stringify({
-      avatar: avatar
+  deleteOwnCard(cardID) {
+    return fetch(`${this._server.baseUrl}cards/${cardID}`, {
+      method: this._server.delete,
+      headers: this._server.headers
     })
-  })
-    .then((res) => getResponse(res))
-};
+      .then((res) => this._getResponse(res))
+  };
 
-// Взаимодействие с лайками -----------------------------------------------
-const checkHeart = (cardID) => {
-  return fetch(`${server.baseUrl}cards/likes/${cardID}`, {
-    method: server.put,
-    headers: server.headers
-  })
-    .then((res) => getResponse(res))
-};
+  // Взаимодействие с профилем -----------------------------------------------
+  getServerProfile() {
+    return fetch(`${this._server.baseUrl}users/me`, {
+      headers: this._server.headers
+    })
+      .then((res) => this._getResponse(res))
+  };
 
-const uncheckHeart = (cardID) => {
-  return fetch(`${server.baseUrl}cards/likes/${cardID}`, {
-    method: server.delete,
-    headers: server.headers
-  })
-    .then((res) => getResponse(res))
-};
+  changeProfile(name, about) {
+    return fetch(`${this._server.baseUrl}users/me`, {
+      method: this._server.patch,
+      headers: this._server.headers,
+      body: JSON.stringify({
+        name: name,
+        about: about
+      })
+    })
+      .then((res) => this._getResponse(res))
+  };
+
+  // Взаимодействие с аватаром ----------------------------------------------
+  changeAvatar(avatar) {
+    return fetch(`${this._server.baseUrl}users/me/avatar`, {
+      method: this._server.patch,
+      headers: this._server.headers,
+      body: JSON.stringify({
+        avatar: avatar
+      })
+    })
+      .then((res) => this._getResponse(res))
+  };
+
+  // Взаимодействие с лайками -----------------------------------------------
+  checkHeart(cardID) {
+    return fetch(`${this._server.baseUrl}cards/likes/${cardID}`, {
+      method: this._server.put,
+      headers: this._server.headers
+    })
+      .then((res) => this._getResponse(res))
+  };
+
+  uncheckHeart(cardID) {
+    return fetch(`${this._server.baseUrl}cards/likes/${cardID}`, {
+      method: this._server.delete,
+      headers: this._server.headers
+    })
+      .then((res) => this._getResponse(res))
+  };
+}
 
 
-export {
-  getServerCards,
-  getServerProfile,
-  postNewCard,
-  changeProfile,
-  deleteOwnCard,
-  checkHeart,
-  uncheckHeart,
-  changeAvatar,
-};
+
+export default Api;

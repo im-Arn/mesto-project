@@ -1,8 +1,6 @@
 import '../pages/index.css';
 
-import {
-  enableValidation,
-} from './validate.js';
+
 
 import {
   formElementProf,
@@ -16,13 +14,25 @@ import {
   addNewCard,
 } from './card.js';
 
+import Api from './api.js';
+import FormValidator from './validate.js';
+
+
 import {
-  getServerCards,
-  getServerProfile,
-  postNewCard,
-  changeProfile,
-  changeAvatar,
-} from './api.js';
+  server,
+  settings,
+  formProfile,
+  formAvatar,
+  formCards,
+} from './constants.js';
+
+export const api = new Api(server);
+const formProfileValidator = new FormValidator(settings, formProfile);
+formProfileValidator.enableValidation();
+const formAvatarValidator = new FormValidator(settings, formAvatar);
+formAvatarValidator.enableValidation();
+const formCardsValidator = new FormValidator(settings, formCards);
+formCardsValidator.enableValidation();
 
 const avatar = document.querySelector('.profile__avatar'); //изображение аватара
 const popupAvatar = document.querySelector('.popup_avatar'); //попап смены аватара
@@ -104,7 +114,7 @@ avatarArea.addEventListener('mouseout', () => {
 formElementProf.addEventListener('submit', (evt) => {
   evt.preventDefault();
   renderLoading(true, evt.submitter);
-  changeProfile(profileNameInput.value, profileBioInput.value)
+  api.changeProfile(profileNameInput.value, profileBioInput.value)
   .then(profile => {
     profileName.textContent = profile.name;
     profileBio.textContent = profile.about;
@@ -121,7 +131,7 @@ formElementProf.addEventListener('submit', (evt) => {
 formElementCard.addEventListener('submit', (evt) => {
   evt.preventDefault();
   renderLoading(true, evt.submitter);
-  postNewCard(cardsTitleInput.value, cardsImgInput.value)
+  api.postNewCard(cardsTitleInput.value, cardsImgInput.value)
     .then((card) => {
       formElementCard.reset();
       addNewCard(card, card.owner);
@@ -139,7 +149,7 @@ formElementCard.addEventListener('submit', (evt) => {
 formElementAvatar.addEventListener('submit', (evt) => {
   evt.preventDefault();
   renderLoading(true, evt.submitter);
-  changeAvatar(avatarImgInput.value)
+  api.changeAvatar(avatarImgInput.value)
     .then(() =>{
       avatar.src = avatarImgInput.value;
       formElementAvatar.reset();
@@ -154,16 +164,16 @@ formElementAvatar.addEventListener('submit', (evt) => {
     })
 });
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__item',
-  submitButtonSelector: '.popup__button-submit',
-  inactiveButtonClass: 'popup__button-submit_inactive',
-  inputErrorClass: 'popup__item_type_error',
-  errorClass: 'popup__input-error_active'
-});
+// enableValidation({
+//   formSelector: '.popup__form',
+//   inputSelector: '.popup__item',
+//   submitButtonSelector: '.popup__button-submit',
+//   inactiveButtonClass: 'popup__button-submit_inactive',
+//   inputErrorClass: 'popup__item_type_error',
+//   errorClass: 'popup__input-error_active'
+// });
 
-Promise.all([getServerCards(), getServerProfile()])
+Promise.all([api.getServerCards(), api.getServerProfile()])
   .then(([cards, profile]) => {
     const profileID = document.querySelector('.profile');
     profileID.id = profile._id;

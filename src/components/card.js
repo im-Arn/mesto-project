@@ -3,16 +3,34 @@ import {
 } from './modal.js';
 
 import {
-  deleteOwnCard,
-  checkHeart,
-  uncheckHeart,
-} from './api.js';
+  api
+} from './index.js';
+
 
 const cardsList = document.querySelector('.cards-grid__list'); //список карточек
 const cardTemplate = document.querySelector('.template-cards').content; //темплейт карточки
 const popupImageValue = document.querySelector('.popup__photo'); //темплейт карточки изображение
 const popupTitleValue = document.querySelector('.popup__subtitle'); //темплейт карточки заголовок
 const popupImage = document.querySelector('.popup_image'); //попап изображения
+
+class Section {
+  constructor({data}, selector) {
+    this._initialArray = data;
+    this._container = document.querySelector(selector);
+  }
+
+  renderItems() {
+
+  }
+
+  setItemAppend(item) {
+
+  }
+
+  setItemPrepend(item) {
+
+  }
+}
 
 // Вспомогательные функции -----------------------------------------------------------------------------------------------------------
 function toggleLike(likes, likeCount, likeButtn) {
@@ -53,7 +71,7 @@ function createCard(card, profile) {
 
   likeButton.addEventListener('click', function (event) {
     if (likeButton.classList.contains('cards-grid__heart-button_active')) {
-      uncheckHeart(card._id)
+      api.uncheckHeart(card._id)
         .then((likes) => {
           toggleLike(likes, likeCounter, likeButton);
         })
@@ -61,7 +79,7 @@ function createCard(card, profile) {
           console.error(err);
         });
     } else {
-      checkHeart(card._id)
+      api.checkHeart(card._id)
         .then((likes,) => {
           toggleLike(likes, likeCounter, likeButton);
         })
@@ -77,7 +95,7 @@ function createCard(card, profile) {
   checkCardOwner(card, profile, trashButton); //проверка принадлежности карточки пользователю
 
   trashButton.addEventListener('click', function () {
-    deleteOwnCard(card._id)
+    api.deleteOwnCard(card._id)
       .then(() => {
         trashButton.closest('.cards-grid__item').remove();
       })
