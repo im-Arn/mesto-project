@@ -1,7 +1,5 @@
 import '../pages/index.css';
 
-
-
 import {
   formElementProf,
   formElementCard,
@@ -16,7 +14,7 @@ import {
 
 import Api from './api.js';
 import FormValidator from './validate.js';
-
+import PopupWithImage from './PopupWithImage.js';
 
 import {
   server,
@@ -24,6 +22,7 @@ import {
   formProfile,
   formAvatar,
   formCards,
+  popupImage,
 } from './constants.js';
 
 export const api = new Api(server);
@@ -33,6 +32,10 @@ const formAvatarValidator = new FormValidator(settings, formAvatar);
 formAvatarValidator.enableValidation();
 const formCardsValidator = new FormValidator(settings, formCards);
 formCardsValidator.enableValidation();
+
+const popupWithImage = new PopupWithImage(popupImage);
+popupWithImage.setEventListeners();
+
 
 const avatar = document.querySelector('.profile__avatar'); //изображение аватара
 const popupAvatar = document.querySelector('.popup_avatar'); //попап смены аватара

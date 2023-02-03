@@ -22,3 +22,5 @@ export const settings = {
 export const formProfile = document.querySelector('.popup__form-profile');
 export const formAvatar = document.querySelector('.popup__form-avatar');
 export const formCards = document.querySelector('.popup__form-cards');
+
+export const popupImage = document.querySelector('.popup_image');

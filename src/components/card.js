@@ -11,6 +11,7 @@ const cardsList = document.querySelector('.cards-grid__list'); //список к
 const cardTemplate = document.querySelector('.template-cards').content; //темплейт карточки
 const popupImageValue = document.querySelector('.popup__photo'); //темплейт карточки изображение
 const popupTitleValue = document.querySelector('.popup__subtitle'); //темплейт карточки заголовок
+//эта дуболь!
 const popupImage = document.querySelector('.popup_image'); //попап изображения
 
 class Section {
