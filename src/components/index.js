@@ -26,7 +26,9 @@ import {
   popupImage,
   popupProfile,
   popupAvatar,
-  profileButtonSubmitter,
+  submitterProfileButton,
+  submitterAvatarButton,
+  submitterCardButton,
   popupCards,
 } from './constants.js';
 
@@ -42,42 +44,43 @@ const popupWithImage = new PopupWithImage(popupImage);
 popupWithImage.setEventListeners();
 
 const profilePopup = new PopupWithForm(
-  {popup: popupProfile,
-  callback: (formData) => {
-    renderLoading(true, profileButtonSubmitter);
-    api.changeProfile(formData)
-    .then(profile => {
-    profileName.textContent = profile.name;
-    profileBio.textContent = profile.about;
-    profilePopup.close();
+  {
+    popup: popupProfile,
+    callback: (formData) => {
+      renderLoading(true, submitterProfileButton);
+      api.changeProfile(formData)
+        .then(profile => {
+          profileName.textContent = profile.name;
+          profileBio.textContent = profile.about;
+          profilePopup.close();
+        })
+        .catch(err => {
+          console.log(`Ошибка обновления информации профиля ${err}`);
+        })
+        .finally(() => {
+          renderLoading(false, submitterProfileButton);
+        })
+    }
   })
-  .catch(err => {
-    console.log(`Ошибка обновления информации профиля ${err}`);
-  })
-  .finally(() => {
-    renderLoading(false, profileButtonSubmitter);
-  })
-  }
-} )
 
 profilePopup.setEventListeners();
 
 const avatarPopup = new PopupWithForm({
   popup: popupAvatar,
   callback: (formData) => {
-    renderLoading(true, profileButtonSubmitter);
+    renderLoading(true, submitterAvatarButton);
     api.changeAvatar(formData)
-    .then((data) =>{
-      avatar.src = data.avatar;
-      avatarPopup.close();
-      resetButtonState(profileButtonSubmitter);
-    })
-    .catch((err) => {
-      console.log(`Ошибка обновления аватара ${err}`);
-    })
-    .finally(() => {
-      renderLoading(false, profileButtonSubmitter);
-    })
+      .then((data) => {
+        avatar.src = data.avatar;
+        avatarPopup.close();
+        resetButtonState(submitterAvatarButton);
+      })
+      .catch((err) => {
+        console.log(`Ошибка обновления аватара ${err}`);
+      })
+      .finally(() => {
+        renderLoading(false, submitterAvatarButton);
+      })
   }
 })
 
@@ -86,19 +89,19 @@ avatarPopup.setEventListeners();
 const cardsPopup = new PopupWithForm({
   popup: popupCards,
   callback: (formData) => {
-    renderLoading(true, profileButtonSubmitter);
+    renderLoading(true, submitterCardButton);
     api.postNewCard(formData)
-    .then((card) => {
-      addNewCard(card, card.owner);
-      cardsPopup.close()
-      resetButtonState(profileButtonSubmitter);
-    })
-    .catch((err) => {
-      console.log(`Ошибка создания карточки ${err}`);
-    })
-    .finally(() => {
-      renderLoading(false, profileButtonSubmitter);
-    })
+      .then((card) => {
+        addNewCard(card, card.owner);
+        cardsPopup.close()
+        resetButtonState(submitterCardButton);
+      })
+      .catch((err) => {
+        console.log(`Ошибка создания карточки ${err}`);
+      })
+      .finally(() => {
+        renderLoading(false, submitterCardButton);
+      })
   }
 })
 
