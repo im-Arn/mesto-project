@@ -24,3 +24,4 @@ export const formAvatar = document.querySelector('.popup__form-avatar');
 export const formCards = document.querySelector('.popup__form-cards');
 
 export const popupImage = document.querySelector('.popup_image');
+export const popupProfile = document.querySelector('.popup_profile');

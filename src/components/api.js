@@ -54,13 +54,13 @@ class Api {
       .then((res) => this._getResponse(res))
   };
 
-  changeProfile(name, about) {
+  changeProfile(data/*name, about*/) {
     return fetch(`${this._server.baseUrl}users/me`, {
       method: this._server.patch,
       headers: this._server.headers,
       body: JSON.stringify({
-        name: name,
-        about: about
+        name: data[Object.keys(data)[0]],
+        about: data[Object.keys(data)[1]]
       })
     })
       .then((res) => this._getResponse(res))

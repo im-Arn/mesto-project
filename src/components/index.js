@@ -15,6 +15,7 @@ import {
 import Api from './api.js';
 import FormValidator from './validate.js';
 import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
 
 import {
   server,
@@ -23,6 +24,7 @@ import {
   formAvatar,
   formCards,
   popupImage,
+  popupProfile,
 } from './constants.js';
 
 export const api = new Api(server);
@@ -36,6 +38,25 @@ formCardsValidator.enableValidation();
 const popupWithImage = new PopupWithImage(popupImage);
 popupWithImage.setEventListeners();
 
+const profilePopup = new PopupWithForm(
+  {popup: popupProfile, 
+  callback: (formData) => {
+    renderLoading(true, evt.submitter);
+    api.changeProfile(formData) /*profileNameInput.value, profileBioInput.value*/
+  .then(profile => {
+    profileName.textContent = profile.name;
+    profileBio.textContent = profile.about;
+    closePopup(popupProfile);
+  })
+  .catch(err => {
+    console.log(`Ошибка обновления информации профиля ${err}`);
+  })
+  .finally(() => {
+    renderLoading(false, evt.submitter);
+  })
+  }
+} )
+
 
 const avatar = document.querySelector('.profile__avatar'); //изображение аватара
 const popupAvatar = document.querySelector('.popup_avatar'); //попап смены аватара
@@ -46,7 +67,6 @@ const avatarButton = document.querySelector('.profile__avatar-button'); //кно
 const avatarOverlay = document.querySelector('.profile__avatar-area-overlay'); //оверлей аватара при наведении на зону аватара
 
 const profileButton = document.querySelector('.profile__edit-button'); //кнопка редактирования профиля
-const popupProfile = document.querySelector('.popup_profile'); //попап профиля
 const profileName = document.querySelector('.profile__name'); //имя профиля
 const profileBio = document.querySelector('.profile__bio'); //био профиля
 const profileNameInput = document.querySelector('.popup__item_el_name'); //поле имени профиля
@@ -117,7 +137,7 @@ avatarArea.addEventListener('mouseout', () => {
 formElementProf.addEventListener('submit', (evt) => {
   evt.preventDefault();
   renderLoading(true, evt.submitter);
-  api.changeProfile(profileNameInput.value, profileBioInput.value)
+  api.changeProfile(namePoup._getInputValues) /*profileNameInput.value, profileBioInput.value*/
   .then(profile => {
     profileName.textContent = profile.name;
     profileBio.textContent = profile.about;
