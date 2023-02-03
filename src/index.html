@@ -21,9 +21,9 @@
           </div>
         </div>
         <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name"></h1>
           <button type="button" class="profile__edit-button" aria-label="редактировать профиль"></button>
-          <p class="profile__bio">Исследователь океана</p>
+          <p class="profile__bio"></p>
         </div>
         <button type="button" class="profile__add-button" aria-label="добавить запись"></button>
       </section>
@@ -41,11 +41,11 @@
       <button type="button" class="popup__button-close" aria-label="закрыть окно"></button>
       <h2 class="popup__header">Редактировать профиль</h2>
       <form class="popup__form popup__form-profile" name="popup-edit-profile" novalidate>
-        <input type="text" class="popup__item popup__item_el_name" id="name" name="name" value="Жак-Ив Кусто"
+        <input type="text" class="popup__item popup__item_el_name" id="name" name="name" value=""
           placeholder="Представьтесь миру" required minlength="2" maxlength="40" pattern="^[A-Za-zА-Яа-яЁё -]+$"
           data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
         <span class="name-error popup__input-error"></span>
-        <input type="text" class="popup__item popup__item_el_bio" id="bio" name="bio" value="Исследователь океана"
+        <input type="text" class="popup__item popup__item_el_bio" id="bio" name="bio" value=""
           placeholder="Кратко о себе" required minlength="2" maxlength="200" pattern="^[A-Za-zА-Яа-яЁё -]+$"
           data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
         <span class="bio-error popup__input-error"></span>

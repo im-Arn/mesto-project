@@ -39,24 +39,25 @@ const popupWithImage = new PopupWithImage(popupImage);
 popupWithImage.setEventListeners();
 
 const profilePopup = new PopupWithForm(
-  {popup: popupProfile, 
+  {popup: popupProfile,
   callback: (formData) => {
-    renderLoading(true, evt.submitter);
-    api.changeProfile(formData) /*profileNameInput.value, profileBioInput.value*/
+    renderLoading(true, profileButtonSubmitter);
+    api.changeProfile(formData)
   .then(profile => {
     profileName.textContent = profile.name;
     profileBio.textContent = profile.about;
-    closePopup(popupProfile);
+    profilePopup.close();
   })
   .catch(err => {
     console.log(`Ошибка обновления информации профиля ${err}`);
   })
   .finally(() => {
-    renderLoading(false, evt.submitter);
+    renderLoading(false, profileButtonSubmitter);
   })
   }
 } )
 
+profilePopup.setEventListeners();
 
 const avatar = document.querySelector('.profile__avatar'); //изображение аватара
 const popupAvatar = document.querySelector('.popup_avatar'); //попап смены аватара
@@ -66,6 +67,7 @@ const avatarArea = document.querySelector('.profile__avatar-area'); //конте
 const avatarButton = document.querySelector('.profile__avatar-button'); //кнопка редактирования аватара
 const avatarOverlay = document.querySelector('.profile__avatar-area-overlay'); //оверлей аватара при наведении на зону аватара
 
+const profileButtonSubmitter = document.querySelector('.popup__button-submit'); //кнопка сабмит профиля
 const profileButton = document.querySelector('.profile__edit-button'); //кнопка редактирования профиля
 const profileName = document.querySelector('.profile__name'); //имя профиля
 const profileBio = document.querySelector('.profile__bio'); //био профиля
@@ -83,6 +85,18 @@ const resetButtonState = (buttonElement) => {
   buttonElement.classList.add('popup__button-submit_inactive');
 };
 
+const renderLoading = (isLoading, button) => {
+  if (isLoading) {
+    button.textContent = 'Сохранение...';
+  } else {
+    if (button === сardsAddButton) {
+      button.textContent = 'Создать';
+    } else {
+      button.textContent = 'Сохранить';
+    }
+  }
+};
+
 // Обработчики событий открытия поп-апов -----------------------------------------------------------------------------
 profileButton.addEventListener('click', () => {
   openPopup(popupProfile);
@@ -97,18 +111,6 @@ profileButton.addEventListener('click', () => {
 avatarButton.addEventListener('click', () => {
   openPopup(popupAvatar);
 });
-
-const renderLoading = (isLoading, button) => {
-  if (isLoading) {
-    button.textContent = 'Сохранение...';
-  } else {
-    if (button === сardsAddButton) {
-      button.textContent = 'Создать';
-    } else {
-      button.textContent = 'Сохранить';
-    }
-  }
-};
 
 // Обработчики событий наведения курсора на аватар -------------------------------------------------------------------
 avatarArea.addEventListener('mouseover', () => {
@@ -134,22 +136,22 @@ avatarArea.addEventListener('mouseout', () => {
 //   resetButtonState(evt.submitter);
 // });
 
-formElementProf.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  renderLoading(true, evt.submitter);
-  api.changeProfile(namePoup._getInputValues) /*profileNameInput.value, profileBioInput.value*/
-  .then(profile => {
-    profileName.textContent = profile.name;
-    profileBio.textContent = profile.about;
-    closePopup(popupProfile);
-  })
-  .catch(err => {
-    console.log(`Ошибка обновления информации профиля ${err}`);
-  })
-  .finally(() => {
-    renderLoading(false, evt.submitter);
-  })
-});
+// formElementProf.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
+//   renderLoading(true, evt.submitter);
+//   api.changeProfile(namePoup._getInputValues) /*profileNameInput.value, profileBioInput.value*/
+//   .then(profile => {
+//     profileName.textContent = profile.name;
+//     profileBio.textContent = profile.about;
+//     closePopup(popupProfile);
+//   })
+//   .catch(err => {
+//     console.log(`Ошибка обновления информации профиля ${err}`);
+//   })
+//   .finally(() => {
+//     renderLoading(false, evt.submitter);
+//   })
+// });
 
 formElementCard.addEventListener('submit', (evt) => {
   evt.preventDefault();

@@ -54,7 +54,7 @@ class Api {
       .then((res) => this._getResponse(res))
   };
 
-  changeProfile(data/*name, about*/) {
+  changeProfile(data) {
     return fetch(`${this._server.baseUrl}users/me`, {
       method: this._server.patch,
       headers: this._server.headers,
