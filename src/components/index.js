@@ -16,6 +16,7 @@ import Api from './api.js';
 import FormValidator from './validate.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
+import UserInfo from './UserInfo.js'
 
 import {
   server,
@@ -30,8 +31,13 @@ import {
   submitterAvatarButton,
   submitterCardButton,
   popupCards,
+  profileName,
+  profileBio,
+  avatar,
 } from './constants.js';
 
+
+const userInfo = new UserInfo(profileName, profileBio, avatar);
 export const api = new Api(server);
 const formProfileValidator = new FormValidator(settings, formProfile);
 formProfileValidator.enableValidation();
@@ -50,8 +56,7 @@ const profilePopup = new PopupWithForm(
       renderLoading(true, submitterProfileButton);
       api.changeProfile(formData)
         .then(profile => {
-          profileName.textContent = profile.name;
-          profileBio.textContent = profile.about;
+          userInfo.setUserInfo(profile);
           profilePopup.close();
         })
         .catch(err => {
@@ -71,7 +76,7 @@ const avatarPopup = new PopupWithForm({
     renderLoading(true, submitterAvatarButton);
     api.changeAvatar(formData)
       .then((data) => {
-        avatar.src = data.avatar;
+        userInfo.setUserInfo(data);
         avatarPopup.close();
         resetButtonState(submitterAvatarButton);
       })
@@ -108,7 +113,7 @@ const cardsPopup = new PopupWithForm({
 cardsPopup.setEventListeners();
 
 
-const avatar = document.querySelector('.profile__avatar'); //изображение аватара
+
 
 const formElementAvatar = document.forms["popup-edit-avatar"]; //форма попапа аватара
 const avatarImgInput = document.querySelector('.popup__item_el_avatar'); //поле ссылки попапа смены аватара
@@ -118,8 +123,7 @@ const avatarOverlay = document.querySelector('.profile__avatar-area-overlay'); /
 
 
 const profileButton = document.querySelector('.profile__edit-button'); //кнопка редактирования профиля
-const profileName = document.querySelector('.profile__name'); //имя профиля
-const profileBio = document.querySelector('.profile__bio'); //био профиля
+
 const profileNameInput = document.querySelector('.popup__item_el_name'); //поле имени профиля
 const profileBioInput = document.querySelector('.popup__item_el_bio'); //поле био профиля
 
@@ -148,17 +152,18 @@ const renderLoading = (isLoading, button) => {
 
 // Обработчики событий открытия поп-апов -----------------------------------------------------------------------------
 profileButton.addEventListener('click', () => {
-  openPopup(popupProfile);
-  profileNameInput.value = profileName.textContent;
-  profileBioInput.value = profileBio.textContent;
+  profilePopup.open();
+  const userData = userInfo.getUserInfo();
+  profileNameInput.value = userData.name;
+  profileBioInput.value = userData.about;
 });
 
 сardsAddButton.addEventListener('click', () => {
-  openPopup(popupCards);
+  cardsPopup.open();
 });
 
 avatarButton.addEventListener('click', () => {
-  openPopup(popupAvatar);
+  avatarPopup.open();
 });
 
 // Обработчики событий наведения курсора на аватар -------------------------------------------------------------------
@@ -170,90 +175,15 @@ avatarArea.addEventListener('mouseout', () => {
   avatarOverlay.classList.remove('profile__avatar-area-overlay_activ');
 })
 
-// События отправки форм ---------------------------------------------------------------------------------------------
-// formElementProf.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   profileName.textContent = profileNameInput.value;
-//   profileBio.textContent = profileBioInput.value;
-//   closePopup(popupProfile);
-// });
-// formElementCard.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   addCard(cardsImgInput.value, cardsTitleInput.value);
-//   formElementCard.reset();
-//   closePopup(popupCards);
-//   resetButtonState(evt.submitter);
-// });
-
-// formElementProf.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   renderLoading(true, evt.submitter);
-//   api.changeProfile(namePoup._getInputValues) /*profileNameInput.value, profileBioInput.value*/
-//   .then(profile => {
-//     profileName.textContent = profile.name;
-//     profileBio.textContent = profile.about;
-//     closePopup(popupProfile);
-//   })
-//   .catch(err => {
-//     console.log(`Ошибка обновления информации профиля ${err}`);
-//   })
-//   .finally(() => {
-//     renderLoading(false, evt.submitter);
-//   })
-// });
-
-// formElementCard.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   renderLoading(true, evt.submitter);
-//   api.postNewCard(cardsTitleInput.value, cardsImgInput.value)
-//     .then((card) => {
-//       formElementCard.reset();
-//       addNewCard(card, card.owner);
-//       closePopup(popupCards);
-//       resetButtonState(evt.submitter);
-//     })
-//     .catch((err) => {
-//       console.log(`Ошибка создания карточки ${err}`);
-//     })
-//     .finally(() => {
-//       renderLoading(false, evt.submitter);
-//     })
-// });
-
-// formElementAvatar.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   renderLoading(true, evt.submitter);
-//   api.changeAvatar(avatarImgInput.value)
-//     .then(() =>{
-//       avatar.src = avatarImgInput.value;
-//       formElementAvatar.reset();
-//       closePopup(popupAvatar);
-//       resetButtonState(evt.submitter);
-//     })
-//     .catch((err) => {
-//       console.log(`Ошибка обновления аватара ${err}`);
-//     })
-//     .finally(() => {
-//       renderLoading(false, evt.submitter);
-//     })
-// });
-
-// enableValidation({
-//   formSelector: '.popup__form',
-//   inputSelector: '.popup__item',
-//   submitButtonSelector: '.popup__button-submit',
-//   inactiveButtonClass: 'popup__button-submit_inactive',
-//   inputErrorClass: 'popup__item_type_error',
-//   errorClass: 'popup__input-error_active'
-// });
 
 Promise.all([api.getServerCards(), api.getServerProfile()])
   .then(([cards, profile]) => {
     const profileID = document.querySelector('.profile');
-    profileID.id = profile._id;
-    profileName.textContent = profile.name;
-    profileBio.textContent = profile.about;
-    avatar.src = profile.avatar;
+    userInfo.setUserInfo(profile);
+    profileID.id = userInfo.userId;
+    // profileName.textContent = profile.name;
+    // profileBio.textContent = profile.about;
+    // avatar.src = profile.avatar;
     cards.forEach((card) => {
       addBaseCard(card, profile);
     });
