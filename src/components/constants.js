@@ -30,3 +30,6 @@ export const submitterProfileButton = document.querySelector('#subPopupProfile')
 export const submitterAvatarButton = document.querySelector('#subPopupAvatar'); //кнопка сабмит аватар
 export const submitterCardButton = document.querySelector('#subPopupCards'); //кнопка сабмит карточки
 export const popupCards = document.querySelector('.popup_cards'); //попап создания карточки
+export const profileName = document.querySelector('.profile__name'); //имя профиля
+export const profileBio = document.querySelector('.profile__bio'); //био профиля
+export const avatar = document.querySelector('.profile__avatar'); //изображение аватара
