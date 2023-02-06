@@ -35,6 +35,24 @@ import {
   cardsList,
 } from '../components/constants.js';
 
+// Сброс состояния сабмита поп-апов ==================================================================================
+const resetButtonState = (buttonElement) => {
+  buttonElement.disabled = true;
+  buttonElement.classList.add('popup__button-submit_inactive');
+};
+
+const renderLoading = (isLoading, button) => {
+  if (isLoading) {
+    button.textContent = 'Сохранение...';
+  } else {
+    if (button === сardsAddButton) {
+      button.textContent = 'Создать';
+    } else {
+      button.textContent = 'Сохранить';
+    }
+  }
+};
+
 // Новые экземпляры классов ==========================================================================================
 // Сервер-------------------------------------------------------
 const api = new Api(server);
@@ -61,6 +79,7 @@ const profilePopup = new PopupWithForm(
         .then(profile => {
           userInfo.setUserInfo(profile);
           profilePopup.close();
+          resetButtonState(submitterProfileButton);
         })
         .catch(err => {
           console.log(`Ошибка обновления информации профиля ${err}`);
@@ -131,25 +150,6 @@ const setSection = (cards) => {
     }
   },
   cardsList)
-};
-
-
-// Сброс состояния сабмита поп-апов ==================================================================================
-export const resetButtonState = (buttonElement) => {
-  buttonElement.disabled = true;
-  buttonElement.classList.add('popup__button-submit_inactive');
-};
-
-export const renderLoading = (isLoading, button) => {
-  if (isLoading) {
-    button.textContent = 'Сохранение...';
-  } else {
-    if (button === сardsAddButton) {
-      button.textContent = 'Создать';
-    } else {
-      button.textContent = 'Сохранить';
-    }
-  }
 };
 
 // Обработчики событий открытия поп-апов =============================================================================
