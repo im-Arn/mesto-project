@@ -6,8 +6,10 @@ import {
   api
 } from './index.js';
 
+import {
+  cardsList,
+} from './constants.js';
 
-const cardsList = document.querySelector('.cards-grid__list'); //список карточек
 const cardTemplate = document.querySelector('.template-cards').content; //темплейт карточки
 const popupImageValue = document.querySelector('.popup__photo'); //темплейт карточки изображение
 const popupTitleValue = document.querySelector('.popup__subtitle'); //темплейт карточки заголовок

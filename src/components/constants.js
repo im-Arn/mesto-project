@@ -34,3 +34,4 @@ export const profileName = document.querySelector('.profile__name'); //имя п
 export const profileBio = document.querySelector('.profile__bio'); //био профиля
 export const avatar = document.querySelector('.profile__avatar'); //изображение аватара
 export const cardTemplate = document.querySelector('.template-cards').content;
+export const cardsList = document.querySelector('.cards-grid__list'); //список карточек

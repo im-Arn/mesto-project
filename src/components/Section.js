@@ -5,17 +5,15 @@ class Section {
     this._renderer = renderer;
   }
 
-  addDefaultItem (element) {
-    this._container.append(element);
-  }
-
-  addNewItem (element) {
+  addItem (element) {
     this._container.prepend(element);
   }
 
   renderItems () {
-    this._items.forEach(item => {
-      this._renderer(item);
+    this._arrayItems = this._items.reverse();
+    this._arrayItems.forEach(item => {
+      const newItem = this._renderer(item);
+      this.addItem(newItem);
     })
   }
 }

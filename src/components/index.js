@@ -10,7 +10,7 @@ import {
 import {
   addBaseCard,
   addNewCard,
-  cardsList,
+  // cardsList,
   createCard,
 } from './card.js';
 
@@ -18,8 +18,9 @@ import Api from './api.js';
 import FormValidator from './validate.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
-import UserInfo from './UserInfo.js'
-import Card from './newCard.js'
+import UserInfo from './UserInfo.js';
+import Card from './newCard.js';
+import Section from './Section.js';
 
 import {
   server,
@@ -38,6 +39,7 @@ import {
   profileBio,
   avatar,
   cardTemplate,
+  cardsList,
 } from './constants.js';
 
 
@@ -127,13 +129,13 @@ const generateCard = (card) => {
 
 const setSection = (cards) => {
   return new Section({
-    cards: cards,
+    items: cards,
     renderer: (card) => {
       const cardNew = generateCard(card).generate();
       return cardNew;
-    },
-    cardsList
-  })
+    }
+  },
+  cardsList)
 }
 
 const formElementAvatar = document.forms["popup-edit-avatar"]; //форма попапа аватара
@@ -199,16 +201,8 @@ avatarArea.addEventListener('mouseout', () => {
 
 Promise.all([api.getServerCards(), api.getServerProfile()])
   .then(([cards, profile]) => {
-    // const profileID = document.querySelector('.profile');
     userInfo.setUserInfo(profile);
-    // profileID.id = userInfo.userId;
-    // cards.forEach((card) => {
-    //   const cardNew = generateCard(card).generate();
-    //   cardsList.append(cardNew);
-    // });
-    const section = setSection(cards);
-    const rendererSection = section.renderItems();
-    section.addDefaultItem(rendererSection);
+    const section = setSection(cards).renderItems();
   })
   .catch((data) => {
     console.log(`Ошибка соединения с сервером ${data}`);
@@ -217,11 +211,11 @@ Promise.all([api.getServerCards(), api.getServerProfile()])
 
 const cardActions = {
   likeState: (card, likeCount, likeButton) => {
-      if (likeButton.classList.contains('cards-grid__heart-button_active')) {
+    if (likeButton.classList.contains('cards-grid__heart-button_active')) {
       api.uncheckHeart(card._id)
         .then((data) => {
-            likeCount.textContent = data.likes.length;
-            likeButton.classList.toggle('cards-grid__heart-button_active');
+          likeCount.textContent = data.likes.length;
+          likeButton.classList.toggle('cards-grid__heart-button_active');
         })
         .catch((err) => {
           console.error(`Ошибка лайка карточки: ${err}`);
@@ -229,8 +223,8 @@ const cardActions = {
     } else {
       api.checkHeart(card._id)
         .then((data) => {
-            likeCount.textContent = data.likes.length;
-            likeButton.classList.toggle('cards-grid__heart-button_active');
+          likeCount.textContent = data.likes.length;
+          likeButton.classList.toggle('cards-grid__heart-button_active');
         })
         .catch((err) => {
           console.error(`Ошибка лайка карточки: ${err}`);
@@ -239,11 +233,11 @@ const cardActions = {
   },
   deleteCard: (card, e) => {
     api.deleteOwnCard(card._id)
-    .then(() => {
-      e.target.closest('.cards-grid__item').remove();
-    })
-    .catch(err => {
-      console.log(`Ошибка удаления карточки: ${err}`);
-    })
+      .then(() => {
+        e.target.closest('.cards-grid__item').remove();
+      })
+      .catch(err => {
+        console.log(`Ошибка удаления карточки: ${err}`);
+      })
   }
 };
