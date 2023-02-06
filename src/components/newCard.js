@@ -24,7 +24,7 @@ class Section {
 class Card {
   constructor(card, profile, template, { handleCardClick }, cardActions) {
     this._card = card;
-    this._profile = profile._id;
+    this._profile = profile;
     this._template = template
     this._handleCardClick = handleCardClick;
     this._cardActions = cardActions;
@@ -43,7 +43,7 @@ class Card {
     this._element.querySelector('.cards-grid__photo').alt = 'фото ' + this._card.name;
     this._element.querySelector('.cards-grid__title').textContent = this._card.name;
     this._element.querySelector('.cards-grid__heart-counter').textContent = this._card.likes.length;
-    this._likeButton = this._element.querySelector('.cards-grid__heart-button');
+
 
     if (this._profile === this._card.owner._id) {
       this._element.querySelector('.cards-grid__trash-button').classList.add('cards-grid__trash-button_active');
@@ -52,9 +52,9 @@ class Card {
     if (this._card.likes.length) {
       this._card.likes.forEach((like) => {
         if (like._id.includes(this._profile)) {
-          this._likeButton.classList.add('cards-grid__heart-button_active');
+          this._element.querySelector('.cards-grid__heart-button').classList.add('cards-grid__heart-button_active');
         } else {
-          this._likeButton.classList.remove('cards-grid__heart-button_active');
+          this._element.querySelector('.cards-grid__heart-button').classList.remove('cards-grid__heart-button_active');
         }
       })
     }
@@ -67,11 +67,11 @@ class Card {
       this._handleCardClick();
     })
 
-    this._likeButton.addEventListener('click', () => {
-      this._cardActions.likeState(this._card, this._element.querySelector('.cards-grid__heart-counter'), this._likeButton);
+    this._element.querySelector('.cards-grid__heart-button').addEventListener('click', () => {
+      this._cardActions.likeState(this._card, this._element.querySelector('.cards-grid__heart-counter'), this._element.querySelector('.cards-grid__heart-button'));
     })
 
-    this._element.querySelector('.cards-grid__trash-button').addEventListener('click', () => {
+    this._element.querySelector('.cards-grid__trash-button').addEventListener('click', (e) => {
       this._cardActions.deleteCard(this._card, e);
     })
   }

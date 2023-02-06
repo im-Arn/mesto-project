@@ -116,8 +116,8 @@ const cardsPopup = new PopupWithForm({
 
 cardsPopup.setEventListeners();
 
-newCard = (card) => {
-  return new Card(card, userInfo.userId, cardTemplate, { 
+const newCard = (card) => {
+  return new Card(card, userInfo.userId, cardTemplate, {
     handleCardClick: () => {
       popupWithImage.open(card.name, card.link);
     }
@@ -192,7 +192,7 @@ Promise.all([api.getServerCards(), api.getServerProfile()])
     profileID.id = userInfo.userId;
     cards.forEach((card) => {
       const cardNew = newCard(card).generate();
-      cardsList.prepend(cardNew);
+      cardsList.append(cardNew);
     });
   })
   .catch((data) => {
@@ -200,7 +200,7 @@ Promise.all([api.getServerCards(), api.getServerProfile()])
   });
 
 
-cardActions = {
+const cardActions = {
   likeState: (card, likeCount, likeButton) => {
       if (likeButton.classList.contains('cards-grid__heart-button_active')) {
       api.uncheckHeart(card._id)
