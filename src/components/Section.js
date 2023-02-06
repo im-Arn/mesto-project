@@ -5,10 +5,16 @@ class Section {
     this._renderer = renderer;
   }
 
+  /**
+   * Публичный метод добавления элемента в разметку
+   */
   addItem (element) {
     this._container.prepend(element);
   }
 
+  /**
+   * Публичный метод добавления массива в разметку
+   */
   renderItems () {
     this._arrayItems = this._items.reverse();
     this._arrayItems.forEach(item => {

@@ -3,22 +3,34 @@ class Popup {
     this._popup = popup;
   }
 
+  /**
+   * Публичный метод открытия попапа
+   */
   open () {
     this._popup.classList.add('popup_opened');
     document.addEventListener('keydown', this._handleEscClose.bind(this));
   }
 
+  /**
+   * Публичный метод закрытия попапа
+   */
   close () {
     this._popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', this._handleEscClose.bind(this));
   }
 
+  /**
+   * Приватный метод обработчика события Esc
+   */
   _handleEscClose(event) {
     if (event.key === 'Escape') {
       this.close()
     }
   }
 
+  /**
+   * Публичный метод создания слушателей
+   */
   setEventListeners () {
     this._popup.querySelector('.popup__button-close')
     .addEventListener('click', this.close.bind(this));

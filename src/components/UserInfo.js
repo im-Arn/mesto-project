@@ -4,7 +4,9 @@ class UserInfo {
     this._about = about;
     this._avatar = avatar;
   }
-
+  /**
+   * Публичный метод получения данных профиля из разметки
+   */
   getUserInfo() {
       return {
         name: this._name.textContent,
@@ -13,6 +15,9 @@ class UserInfo {
       }
   }
 
+  /**
+   * Публичный метод изменения данных профиля в разметке
+   */
   setUserInfo(data) {
     if (data.name) {
       this._name.textContent = data.name;

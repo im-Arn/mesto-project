@@ -1,11 +1,12 @@
 
-
 class Api {
   constructor(server) {
     this._server = server;
   }
 
-
+  /**
+   * Приватный метод проверки ответа сервера
+   */
   _getResponse(res) {
     return res.ok
       ? res.json()
@@ -24,7 +25,7 @@ class Api {
   };
 
   /**
-   * Публичный метод получения карточек
+   * Публичный метод создания карточки
    */
   postNewCard(data) {
     return fetch(`${this._server.baseUrl}cards`, {
@@ -38,6 +39,9 @@ class Api {
       .then((res) => this._getResponse(res))
   };
 
+  /**
+   * Публичный метод удаления карточки
+   */
   deleteOwnCard(cardID) {
     return fetch(`${this._server.baseUrl}cards/${cardID}`, {
       method: this._server.delete,
@@ -47,6 +51,9 @@ class Api {
   };
 
   // Взаимодействие с профилем -----------------------------------------------
+  /**
+   * Публичный метод получения данных профиля
+   */
   getServerProfile() {
     return fetch(`${this._server.baseUrl}users/me`, {
       headers: this._server.headers
@@ -54,6 +61,9 @@ class Api {
       .then((res) => this._getResponse(res))
   };
 
+  /**
+   * Публичный метод изменения данных профиля
+   */
   changeProfile(data) {
     return fetch(`${this._server.baseUrl}users/me`, {
       method: this._server.patch,
@@ -67,6 +77,9 @@ class Api {
   };
 
   // Взаимодействие с аватаром ----------------------------------------------
+  /**
+   * Публичный метод изменения данных аватара
+   */
   changeAvatar(data) {
     return fetch(`${this._server.baseUrl}users/me/avatar`, {
       method: this._server.patch,
@@ -79,6 +92,9 @@ class Api {
   };
 
   // Взаимодействие с лайками -----------------------------------------------
+  /**
+  * Публичный метод постановки лайка
+  */
   checkHeart(cardID) {
     return fetch(`${this._server.baseUrl}cards/likes/${cardID}`, {
       method: this._server.put,
@@ -87,6 +103,9 @@ class Api {
       .then((res) => this._getResponse(res))
   };
 
+  /**
+   * Публичный метод снятия лайка
+   */
   uncheckHeart(cardID) {
     return fetch(`${this._server.baseUrl}cards/likes/${cardID}`, {
       method: this._server.delete,
@@ -95,7 +114,5 @@ class Api {
       .then((res) => this._getResponse(res))
   };
 }
-
-
 
 export default Api;
