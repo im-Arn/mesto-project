@@ -101,7 +101,8 @@ const cardsPopup = new PopupWithForm({
     renderLoading(true, submitterCardButton);
     api.postNewCard(formData)
       .then((card) => {
-        addNewCard(card, card.owner);
+        const cardNew = generateCard(card).generate();
+        cardsList.prepend(cardNew);
         cardsPopup.close()
         resetButtonState(submitterCardButton);
       })
@@ -116,12 +117,23 @@ const cardsPopup = new PopupWithForm({
 
 cardsPopup.setEventListeners();
 
-const newCard = (card) => {
+const generateCard = (card) => {
   return new Card(card, userInfo.userId, cardTemplate, {
     handleCardClick: () => {
       popupWithImage.open(card.name, card.link);
     }
   }, cardActions)
+}
+
+const setSection = (cards) => {
+  return new Section({
+    cards: cards,
+    renderer: (card) => {
+      const cardNew = generateCard(card).generate();
+      return cardNew;
+    },
+    cardsList
+  })
 }
 
 const formElementAvatar = document.forms["popup-edit-avatar"]; //форма попапа аватара
@@ -187,13 +199,16 @@ avatarArea.addEventListener('mouseout', () => {
 
 Promise.all([api.getServerCards(), api.getServerProfile()])
   .then(([cards, profile]) => {
-    const profileID = document.querySelector('.profile');
+    // const profileID = document.querySelector('.profile');
     userInfo.setUserInfo(profile);
-    profileID.id = userInfo.userId;
-    cards.forEach((card) => {
-      const cardNew = newCard(card).generate();
-      cardsList.append(cardNew);
-    });
+    // profileID.id = userInfo.userId;
+    // cards.forEach((card) => {
+    //   const cardNew = generateCard(card).generate();
+    //   cardsList.append(cardNew);
+    // });
+    const section = setSection(cards);
+    const rendererSection = section.renderItems();
+    section.addDefaultItem(rendererSection);
   })
   .catch((data) => {
     console.log(`Ошибка соединения с сервером ${data}`);

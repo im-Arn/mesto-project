@@ -1,25 +1,3 @@
-class Section {
-  constructor({ items, renderer }, selector) {
-    this._initialArray = items;
-    this._container = document.querySelector(selector);
-    this._renderer = renderer;
-  }
-
-  addItem(cardItem) {
-    this._container.append(cardItem);
-  }
-
-  renderItems() {
-    // this._initialArray = items;
-    this._initialArray.forEach((item) => {
-      const newCard = new Card(item); //получил
-      const newCardElement = newCard.generate; //отрисовал
-      this.addItem(newCardElement); //добавил
-
-    });
-  }
-}
-
 
 class Card {
   constructor(card, profile, template, { handleCardClick }, cardActions) {
