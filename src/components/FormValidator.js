@@ -8,7 +8,7 @@ class FormValidator {
   }
 
   /**
-   *  Функции отображения валидности
+   *  Функции отображения ошибки валидности
    */
   _showInputError(formInput, errorMessage) {
     const formError = this._form.querySelector(`.${formInput.id}-error`);
@@ -18,7 +18,7 @@ class FormValidator {
   };
 
   /**
-  *  Функции отображения невалидности
+  *  Функции отображения скрытия ошибки валидности
   */
   _hideInputError(formInput) {
     const formError = this._form.querySelector(`.${formInput.id}-error`);
