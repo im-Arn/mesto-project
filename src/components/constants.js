@@ -33,3 +33,4 @@ export const popupCards = document.querySelector('.popup_cards'); //попап �
 export const profileName = document.querySelector('.profile__name'); //имя профиля
 export const profileBio = document.querySelector('.profile__bio'); //био профиля
 export const avatar = document.querySelector('.profile__avatar'); //изображение аватара
+export const cardTemplate = document.querySelector('.template-cards').content;

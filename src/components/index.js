@@ -10,6 +10,8 @@ import {
 import {
   addBaseCard,
   addNewCard,
+  cardsList,
+  createCard,
 } from './card.js';
 
 import Api from './api.js';
@@ -17,6 +19,7 @@ import FormValidator from './validate.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
 import UserInfo from './UserInfo.js'
+import Card from './newCard.js'
 
 import {
   server,
@@ -34,6 +37,7 @@ import {
   profileName,
   profileBio,
   avatar,
+  cardTemplate,
 } from './constants.js';
 
 
@@ -112,8 +116,13 @@ const cardsPopup = new PopupWithForm({
 
 cardsPopup.setEventListeners();
 
-
-
+newCard = (card) => {
+  return new Card(card, userInfo.userId, cardTemplate, { 
+    handleCardClick: () => {
+      popupWithImage.open(card.name, card.link);
+    }
+  }, cardActions)
+}
 
 const formElementAvatar = document.forms["popup-edit-avatar"]; //форма попапа аватара
 const avatarImgInput = document.querySelector('.popup__item_el_avatar'); //поле ссылки попапа смены аватара
@@ -181,13 +190,45 @@ Promise.all([api.getServerCards(), api.getServerProfile()])
     const profileID = document.querySelector('.profile');
     userInfo.setUserInfo(profile);
     profileID.id = userInfo.userId;
-    // profileName.textContent = profile.name;
-    // profileBio.textContent = profile.about;
-    // avatar.src = profile.avatar;
     cards.forEach((card) => {
-      addBaseCard(card, profile);
+      const cardNew = newCard(card).generate();
+      cardsList.prepend(cardNew);
     });
   })
   .catch((data) => {
     console.log(`Ошибка соединения с сервером ${data}`);
   });
+
+
+cardActions = {
+  likeState: (card, likeCount, likeButton) => {
+      if (likeButton.classList.contains('cards-grid__heart-button_active')) {
+      api.uncheckHeart(card._id)
+        .then((data) => {
+            likeCount.textContent = data.likes.length;
+            likeButton.classList.toggle('cards-grid__heart-button_active');
+        })
+        .catch((err) => {
+          console.error(`Ошибка лайка карточки: ${err}`);
+        });
+    } else {
+      api.checkHeart(card._id)
+        .then((data) => {
+            likeCount.textContent = data.likes.length;
+            likeButton.classList.toggle('cards-grid__heart-button_active');
+        })
+        .catch((err) => {
+          console.error(`Ошибка лайка карточки: ${err}`);
+        });
+    }
+  },
+  deleteCard: (card, e) => {
+    api.deleteOwnCard(card._id)
+    .then(() => {
+      e.target.closest('.cards-grid__item').remove();
+    })
+    .catch(err => {
+      console.log(`Ошибка удаления карточки: ${err}`);
+    })
+  }
+};
