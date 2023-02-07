@@ -35,23 +35,10 @@ import {
   cardsList,
 } from '../components/constants.js';
 
-// Сброс состояния сабмита поп-апов ==================================================================================
-const resetButtonState = (buttonElement) => {
-  buttonElement.disabled = true;
-  buttonElement.classList.add('popup__button-submit_inactive');
-};
-
-const renderLoading = (isLoading, button) => {
-  if (isLoading) {
-    button.textContent = 'Сохранение...';
-  } else {
-    if (button === сardsAddButton) {
-      button.textContent = 'Создать';
-    } else {
-      button.textContent = 'Сохранить';
-    }
-  }
-};
+import {
+  resetButtonState,
+  renderLoading,
+} from '../components/utils.js';
 
 // Новые экземпляры классов ==========================================================================================
 // Сервер-------------------------------------------------------
@@ -114,7 +101,7 @@ avatarPopup.setEventListeners();
 const cardsPopup = new PopupWithForm({
   popup: popupCards,
   callback: (formData) => {
-    renderLoading(true, submitterCardButton);
+    renderLoading(true, submitterCardButton, submitterCardButton);
     api.postNewCard(formData)
       .then((card) => {
         const cardNew = generateCard(card).generate();
@@ -126,7 +113,7 @@ const cardsPopup = new PopupWithForm({
         console.log(`Ошибка создания карточки ${err}`);
       })
       .finally(() => {
-        renderLoading(false, submitterCardButton);
+        renderLoading(false, submitterCardButton, submitterCardButton);
       })
   }
 })
