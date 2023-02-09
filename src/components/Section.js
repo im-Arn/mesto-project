@@ -1,6 +1,5 @@
 class Section {
-  constructor({ items, renderer }, container) {
-    this._items = items;
+  constructor({ renderer }, container) {
     this._container = container;
     this._renderer = renderer;
   }
@@ -15,7 +14,8 @@ class Section {
   /**
    * Публичный метод добавления массива в разметку
    */
-  renderItems () {
+  renderItems (cards) {
+    this._items = cards;
     this._arrayItems = this._items.reverse();
     this._arrayItems.forEach(item => {
       const newItem = this._renderer(item);

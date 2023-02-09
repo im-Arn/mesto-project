@@ -105,7 +105,7 @@ const cardsPopup = new PopupWithForm({
     api.postNewCard(formData)
       .then((card) => {
         const cardNew = generateCard(card).generate();
-        setSection().addItem(cardNew);
+        setSection.addItem(cardNew);
         cardsPopup.close()
         resetButtonState(submitterCardButton);
       })
@@ -128,16 +128,14 @@ const generateCard = (card) => {
   }, cardActions)
 };
 
-const setSection = (cards) => {
-  return new Section({
-    items: cards,
+const setSection =
+  new Section({
     renderer: (card) => {
       const cardNew = generateCard(card).generate();
       return cardNew;
     }
   },
-  cardsList)
-};
+    cardsList);
 
 // Обработчики событий открытия поп-апов =============================================================================
 profileButton.addEventListener('click', () => {
@@ -168,7 +166,7 @@ avatarArea.addEventListener('mouseout', () => {
 Promise.all([api.getServerCards(), api.getServerProfile()])
   .then(([cards, profile]) => {
     userInfo.setUserInfo(profile);
-    setSection(cards).renderItems();
+    setSection.renderItems(cards);
   })
   .catch((data) => {
     console.log(`Ошибка соединения с сервером ${data}`);
