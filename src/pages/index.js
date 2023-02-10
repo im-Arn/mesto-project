@@ -105,7 +105,7 @@ const cardsPopup = new PopupWithForm({
     api.postNewCard(formData)
       .then((card) => {
         const cardNew = generateCard(card);
-        setSection.addItem(cardNew);
+        cardSection.addItem(cardNew);
         cardsPopup.close()
         resetButtonState(submitterCardButton);
       })
@@ -131,7 +131,7 @@ const generateCard = (card) => {
         newCard.toggleHeartState(e, data);
       })
       .catch(err => {
-        console.error(`Ошибка лайка карточки: ${err}`);
+        console.error(`Ошибка постановки лайка: ${err}`);
       })
     },
     deleteLike: (e, card) => {
@@ -140,7 +140,7 @@ const generateCard = (card) => {
         newCard.toggleHeartState(e, data);
       })
       .catch(err => {
-        console.error(`Ошибка лайка карточки: ${err}`);
+        console.error(`Ошибка удаления лайка: ${err}`);
       })
     },
     deleteCard: (card) => {
@@ -157,7 +157,7 @@ const generateCard = (card) => {
   return newCard.generate();
 };
 
-const setSection =
+const cardSection =
   new Section({
     renderer: (card) => {
       const cardNew = generateCard(card);
@@ -195,62 +195,8 @@ avatarArea.addEventListener('mouseout', () => {
 Promise.all([api.getServerCards(), api.getServerProfile()])
   .then(([cards, profile]) => {
     userInfo.setUserInfo(profile);
-    setSection.renderItems(cards);
+    cardSection.renderItems(cards);
   })
   .catch((data) => {
     console.log(`Ошибка соединения с сервером ${data}`);
   });
-
-
-// Словарь ========================================================================================================
-// const cardActions = {
-//   // likeState: (card, likeCount, likeButton) => {
-//   //   if (likeButton.classList.contains('cards-grid__heart-button_active')) {
-//   //     api.uncheckHeart(card._id)
-//   //       .then((data) => {
-//   //         likeCount.textContent = data.likes.length;
-//   //         likeButton.classList.toggle('cards-grid__heart-button_active');
-//   //       })
-//   //       .catch((err) => {
-//   //         console.error(`Ошибка лайка карточки: ${err}`);
-//   //       });
-//   //   } else {
-//   //     api.checkHeart(card._id)
-//   //       .then((data) => {
-//   //         likeCount.textContent = data.likes.length;
-//   //         likeButton.classList.toggle('cards-grid__heart-button_active');
-//   //       })
-//   //       .catch((err) => {
-//   //         console.error(`Ошибка лайка карточки: ${err}`);
-//   //       });
-//   //   }
-//   // },
-//     likeState: (card, element, likeCount, likeButton) => {
-//     if (likeButton.classList.contains('cards-grid__heart-button_active')) {
-//       api.uncheckHeart(card._id)
-//         .then((data) => {
-//           element.toggleHeartState(likeCount, likeButton, data);
-//         })
-//         .catch((err) => {
-//           console.error(`Ошибка лайка карточки: ${err}`);
-//         });
-//     } else {
-//       api.checkHeart(card._id)
-//         .then((data) => {
-//           element.toggleHeartState(likeCount, likeButton, data);
-//         })
-//         .catch((err) => {
-//           console.error(`Ошибка лайка карточки: ${err}`);
-//         });
-//     }
-//   },
-//   deleteCard: (card, e) => {
-//     api.deleteOwnCard(card._id)
-//       .then(() => {
-//         e.target.closest('.cards-grid__item').remove();
-//       })
-//       .catch(err => {
-//         console.log(`Ошибка удаления карточки: ${err}`);
-//       })
-//   }
-// };
