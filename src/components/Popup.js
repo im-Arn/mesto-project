@@ -33,8 +33,7 @@ class Popup {
    * Публичный метод создания слушателей
    */
   setEventListeners () {
-    this._popup.querySelector('.popup__button-close')
-    .addEventListener('click', this.close.bind(this));
+    this._popup.querySelector('.popup__button-close').addEventListener('click', this.close.bind(this));
 
     this._popup.addEventListener('mousedown', (evt) => {
       if (evt.target === this._popup) {
