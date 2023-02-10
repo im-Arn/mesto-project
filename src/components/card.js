@@ -1,6 +1,6 @@
 
 class Card {
-  constructor(card, profile, template, { handleCardClick, deleteLike, putLike, deleteCard}) {
+  constructor(card, profile, template, { handleCardClick, deleteLike, putLike, deleteCard }) {
     this._card = card;
     this._profile = profile;
     this._template = template
@@ -43,37 +43,28 @@ class Card {
     })
   }
 
-  toggleHeartState (e, data) {
+  toggleHeartState(e, data) {
     this._likeCount.textContent = data.likes.length;
     e.target.classList.toggle('cards-grid__heart-button_active');
   }
 
-  _handleLikeClick (e) {
-    if(e.target.classList.contains('cards-grid__heart-button_active')) {
-      try {
-        this._deleteLike(e, this._card)
-      } catch (error) {
-        console.log(`Ошибка удаления лайка: ${error}`)
-      }
+  _handleLikeClick(e) {
+    if (e.target.classList.contains('cards-grid__heart-button_active')) {
+      this._deleteLike(e, this._card)
     } else {
-      try {
-        this._putLike(e, this._card)
-      } catch (error) {
-        console.log(`Ошибка постановки лайка: ${err}`)
-      }
+      this._putLike(e, this._card)
     }
   }
 
   delete() {
-    try {
       this._deleteCard(this._card);
-    } catch (error) {
-      console.log(`Ошибка в deleteCard: ${error}`);
-    }
   }
-
+  /**
+   * Публичный метод удаления элемента разметки
+   */
   deleteItem() {
     this._element.remove();
+    this._element = null;
   }
 
   /**
